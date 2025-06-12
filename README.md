@@ -1,8 +1,8 @@
-# Lysevych Oleksandr — Personal Website
+# Lysevych Oleksandr — personal website
 
 **Website**: [Lysevych.net](https://Lysevych.net/)
 **Author**: Lysevych Oleksandr
-**Theme**: Personal Web Card
+**Theme**: Personal web card
 **Repository**: [`Lysevych.net`](https://GitHub.com/Lysevych/Lysevych.net)
 
 ---
