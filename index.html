@@ -72,11 +72,17 @@
 		.center-image {
 			width: 100%;
 			height: auto;
+      cursor: pointer;
+  		transition: transform 1s ease;
 			display: block;
 			user-select: none;
 			-webkit-user-drag: none;
-		}
+	}
 
+    .center-image:hover {
+		transform: scale(1.1);
+	}
+    
 		.tooltip-text-main {
 			position: absolute;
 			top: 85%;
@@ -116,9 +122,15 @@
 		.social-icon {
 			width: clamp(50px, 3vw, 3vw);
 			filter: grayscale(100%);
+      cursor: pointer;
+  		transition: transform 1s ease;
 			user-select: none;
 			-webkit-user-drag: none;
 		}
+    
+    .social-icon:hover {
+      transform: scale(1.1);
+    }
 
 		.social-container a {
 			position: relative;
