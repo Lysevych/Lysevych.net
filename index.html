@@ -315,8 +315,13 @@
 		topRightTooltipTrigger.addEventListener('mouseenter', showTopRightTooltip);
 		topRightTooltipTrigger.addEventListener('mouseleave', hideTopRightTooltip);
 		topRightTooltipTrigger.addEventListener('touchstart', (e) => {
-			e.preventDefault();
-			topRightTooltipVisible ? hideTopRightTooltip() : showTopRightTooltip();
+			if (topRightTooltipVisible) {
+				hideTopRightTooltip();
+				return;
+			} else {
+				e.preventDefault();
+				showTopRightTooltip();
+			}
 		});
 		socialLinks.forEach(link => {
 			const tooltip = link.querySelector('.tooltip-text-social');
