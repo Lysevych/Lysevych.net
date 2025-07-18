@@ -172,6 +172,66 @@
 			border-top: 10px solid #666666;
 		}
 
+		.top-right-tooltip {
+			position: fixed;
+			top: clamp(20px, 3vw, 3vw);
+			right: clamp(20px, 3vw, 3vw);
+			width: clamp(50px, 12vw, 12vw);
+			display: inline-block;
+			z-index: 100;
+		}
+
+		.top-right-image {
+			width: 100%;
+			height: auto;
+			cursor: pointer;
+			transition: transform 1s ease;
+			display: block;
+			user-select: none;
+			-webkit-user-drag: none;
+		}
+
+		.top-right-image:hover {
+			transform: scale(1.1);
+		}
+
+		.tooltip-text-top-right {
+			position: absolute;
+			right: calc(100% + 20px);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #ffffff;
+			background: linear-gradient(270deg, #666666, #999999);
+			font-size: 15px;
+			text-align: center;
+			white-space: nowrap;
+			text-shadow: 0px 0px 10px #ffffff;
+			padding: 10px 10px;
+			border-radius: 10px;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 1s ease;
+			user-select: none;
+			z-index: 10;
+			visibility: visible;
+		}
+
+		.tooltip-text-top-right.visible {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.tooltip-text-top-right::after {
+			content: "";
+			position: absolute;
+			left: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+			border-top: 7px solid transparent;
+			border-bottom: 7px solid transparent;
+			border-left: 10px solid #666666;
+		}
+
 		@media (hover: hover) and (pointer: fine) {
 			.social-container a:hover .tooltip-text-social {
 				opacity: 1;
@@ -202,12 +262,23 @@
 		</a>
 	</div>
 
+	<a href="https://Design.Lysevych.net/" aria-label="Design Stories" target="_blank" rel="me noopener noreferrer">
+		<main class="top-right-tooltip">
+			<img class="top-right-image" src="https://raw.githubusercontent.com/Lysevych/Lysevych/main/Design-Lysevych-net-logo.webp" alt="Design Stories" />
+			<div class="tooltip-text-top-right" id="tooltip-top-right">Design Stories</div>
+		</main>
+	</a>
+
 	<script>
 		const tooltip = document.getElementById('tooltip');
 		const tooltipTrigger = document.querySelector('.tooltip');
 		const socialLinks = document.querySelectorAll('.social-container a');
+		const topRightTooltip = document.getElementById('tooltip-top-right');
+		const topRightTooltipTrigger = document.querySelector('.top-right-tooltip');
 		let tooltipVisible = false;
+		let topRightTooltipVisible = false;
 		let tooltipTimer;
+		let topRightTooltipTimer;
 		let socialTooltipTimer;
 		const showTooltip = () => {
 			clearTimeout(tooltipTimer);
@@ -218,6 +289,16 @@
 		const hideTooltip = () => {
 			tooltip.classList.remove('visible');
 			tooltipVisible = false;
+		};
+		const showTopRightTooltip = () => {
+			clearTimeout(topRightTooltipTimer);
+			topRightTooltip.classList.add('visible');
+			topRightTooltipVisible = true;
+			topRightTooltipTimer = setTimeout(hideTopRightTooltip, 10000);
+		};
+		const hideTopRightTooltip = () => {
+			topRightTooltip.classList.remove('visible');
+			topRightTooltipVisible = false;
 		};
 		const hideAllSocialTooltips = () => {
 			clearTimeout(socialTooltipTimer);
@@ -230,6 +311,12 @@
 		tooltipTrigger.addEventListener('touchstart', (e) => {
 			e.preventDefault();
 			tooltipVisible ? hideTooltip() : showTooltip();
+		});
+		topRightTooltipTrigger.addEventListener('mouseenter', showTopRightTooltip);
+		topRightTooltipTrigger.addEventListener('mouseleave', hideTopRightTooltip);
+		topRightTooltipTrigger.addEventListener('touchstart', (e) => {
+			e.preventDefault();
+			topRightTooltipVisible ? hideTopRightTooltip() : showTopRightTooltip();
 		});
 		socialLinks.forEach(link => {
 			const tooltip = link.querySelector('.tooltip-text-social');
@@ -245,8 +332,10 @@
 		});
 		document.addEventListener('touchstart', function(e) {
 			const isTooltip = tooltipTrigger.contains(e.target);
+			const isTopRightTooltip = topRightTooltipTrigger.contains(e.target);
 			const isSocial = e.target.closest('.social-container a');
 			if (!isTooltip) hideTooltip();
+			if (!isTopRightTooltip) hideTopRightTooltip();
 			if (!isSocial) hideAllSocialTooltips();
 		});
 	</script>
