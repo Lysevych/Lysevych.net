@@ -94,7 +94,7 @@
 			text-align: center;
 			white-space: nowrap;
 			text-shadow: 0px 0px 10px #ffffff;
-			padding: 10px 10px;
+			padding: 10px 20px 10px 20px;
 			border-radius: 10px;
 			opacity: 0;
 			pointer-events: none;
@@ -148,7 +148,7 @@
 			text-align: center;
 			white-space: nowrap;
 			text-shadow: 0px 0px 10px #ffffff;
-			padding: 10px 10px;
+			padding: 10px 10px 10px 10px;
 			border-radius: 10px;
 			opacity: 0;
 			transition: opacity 1s ease;
@@ -206,7 +206,7 @@
 			text-align: center;
 			white-space: nowrap;
 			text-shadow: 0px 0px 10px #ffffff;
-			padding: 10px 10px;
+			padding: 10px 10px 10px 10px;
 			border-radius: 10px;
 			opacity: 0;
 			pointer-events: none;
@@ -384,33 +384,6 @@
 			}, fadeConfig.startDelay);
 		}
 		document.addEventListener('DOMContentLoaded', startLogoFadeAnimation);
-	</script>
-
-	<script>
-		let socialTooltipTimeout;
-		document.querySelectorAll('.social-container a').forEach(link => {
-			const tooltip = link.querySelector('.tooltip-text-social');
-			link.addEventListener('touchstart', function(e) {
-				if (tooltip.classList.contains('visible')) return;
-				e.preventDefault();
-				hideAllSocialTooltips();
-				tooltip.classList.add('visible');
-				socialTooltipTimeout = setTimeout(() => {
-					tooltip.classList.remove('visible');
-				}, 10000);
-			});
-		});
-
-		function hideAllSocialTooltips() {
-			clearTimeout(socialTooltipTimeout);
-			document.querySelectorAll('.tooltip-text-social.visible').forEach(el => {
-				el.classList.remove('visible');
-			});
-		}
-		document.addEventListener('touchstart', function(e) {
-			const isInside = e.target.closest('.social-container a');
-			if (!isInside) hideAllSocialTooltips();
-		});
 	</script>
 </body>
 
