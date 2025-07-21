@@ -183,12 +183,15 @@
 
 		.top-right-image {
 			width: 100%;
-			height: auto;
+			height: 0;
+			padding-bottom: 100%;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
 			cursor: pointer;
-			transition: transform 1s ease;
+			transition: transform 1s ease, opacity 1s ease;
 			display: block;
 			user-select: none;
-			-webkit-user-drag: none;
 		}
 
 		.top-right-image:hover {
@@ -264,7 +267,7 @@
 
 	<a href="https://Design.Lysevych.net/" aria-label="Dizaino Istorijos" rel="me noopener noreferrer">
 		<main class="top-right-tooltip">
-			<img class="top-right-image" src="https://raw.githubusercontent.com/Lysevych/Lysevych/main/Design-Lysevych-net-logo.webp" alt="Dizaino Istorijos" />
+			<div class="top-right-image" style="background-image: url('https://raw.githubusercontent.com/Lysevych/Lysevych/main/Design-Lysevych-net-logo.webp');" title="Dizaino Istorijos"></div>
 			<div class="tooltip-text-top-right" id="tooltip-top-right">Dizaino Istorijos</div>
 		</main>
 	</a>
@@ -355,15 +358,16 @@
 		function performFadeSequence() {
 			const logoElement = document.querySelector('.top-right-image');
 			if (!logoElement) return;
-			const originalSrc = logoElement.src;
+			const originalBg = `url('https://raw.githubusercontent.com/Lysevych/Lysevych/main/Design-Lysevych-net-logo.webp')`;
+			const pawBg = `url('${fadeConfig.pawImageUrl}')`;
 			logoElement.style.opacity = '0';
 			setTimeout(() => {
-				logoElement.src = fadeConfig.pawImageUrl;
+				logoElement.style.backgroundImage = pawBg;
 				logoElement.style.opacity = '1';
 				setTimeout(() => {
 					logoElement.style.opacity = '0';
 					setTimeout(() => {
-						logoElement.src = originalSrc;
+						logoElement.style.backgroundImage = originalBg;
 						logoElement.style.opacity = '1';
 					}, fadeConfig.fadeDuration);
 				}, fadeConfig.pawShowDuration);
@@ -371,17 +375,16 @@
 		}
 
 		function startLogoFadeAnimation() {
-			const logoElement = document.querySelector('.top-right-image');
-			if (!logoElement) return;
-			logoElement.style.transition = `opacity ${fadeConfig.fadeDuration}ms ease, transform 1s ease`;
-			setTimeout(() => {
+			const pawImage = new Image();
+			pawImage.onload = () => {
 				setTimeout(() => {
 					performFadeSequence();
 					setInterval(() => {
 						performFadeSequence();
 					}, fadeConfig.cycleInterval);
-				}, 100);
-			}, fadeConfig.startDelay);
+				}, fadeConfig.startDelay);
+			};
+			pawImage.src = fadeConfig.pawImageUrl;
 		}
 		document.addEventListener('DOMContentLoaded', startLogoFadeAnimation);
 	</script>
